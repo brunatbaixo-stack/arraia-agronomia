@@ -158,7 +158,7 @@
     margin: 14px 0 6px;
     color: var(--marrom);
   }
-  input[type=text], select {
+  input[type=text], input[type=number], select, textarea {
     width: 100%;
     padding: 12px 14px;
     border: 2px solid var(--borda);
@@ -169,10 +169,11 @@
     color: var(--texto);
     transition: border-color .15s;
   }
-  input[type=text]:focus, select:focus {
+  input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--laranja);
   }
+  textarea { resize: vertical; min-height: 70px; }
 
   .periodo-opts { display: flex; gap: 12px; margin-top: 6px; }
   .disp-opts { flex-wrap: wrap; }
@@ -301,6 +302,15 @@
       <label for="nome">Nome completo</label>
       <input type="text" id="nome" placeholder="Seu nome completo" autocomplete="off">
 
+      <label for="telefone">Telefone (WhatsApp)</label>
+      <input type="text" id="telefone" placeholder="(44) 99999-9999" inputmode="tel" autocomplete="off">
+
+      <label for="nascimento">Data de nascimento</label>
+      <input type="text" id="nascimento" placeholder="DD/MM/AAAA" inputmode="numeric" autocomplete="off">
+
+      <label for="cpf">CPF</label>
+      <input type="text" id="cpf" placeholder="000.000.000-00" inputmode="numeric" autocomplete="off">
+
       <label for="ano">Ano que está cursando</label>
       <select id="ano">
         <option value="">Selecione...</option>
@@ -324,6 +334,13 @@
         <label><input type="radio" name="disponibilidade" value="Noite"><span class="pill-txt">🌙 Noite</span></label>
         <label><input type="radio" name="disponibilidade" value="Integral"><span class="pill-txt">⏰ Integral</span></label>
       </div>
+
+      <label for="visitantes">Quantos convidados externos você vai trazer?</label>
+      <input type="number" id="visitantes" min="2" step="1" value="2" inputmode="numeric">
+      <p class="lead" style="margin-top:4px;margin-bottom:0;font-size:13px">Mínimo de 2 convidados. Esse número nos ajuda a estimar a comida da festa. 🍢</p>
+
+      <label for="motivacao">O que estimula você a ajudar na organização da festa junina?</label>
+      <textarea id="motivacao" rows="3" placeholder="Conte pra gente o que te motiva a participar..."></textarea>
 
       <div class="check-line">
         <input type="checkbox" id="compromisso">
@@ -361,17 +378,27 @@
   $('enviar').addEventListener('click', async () => {
     limpaErro();
     const nome = $('nome').value.trim();
+    const telefone = $('telefone').value.trim();
+    const nascimento = $('nascimento').value.trim();
+    const cpf = $('cpf').value.trim();
     const ano = $('ano').value;
     const periodoEl = document.querySelector('input[name=periodo]:checked');
     const periodo = periodoEl ? periodoEl.value : '';
     const dispEl = document.querySelector('input[name=disponibilidade]:checked');
     const disponibilidade = dispEl ? dispEl.value : '';
+    const visitantes = parseInt($('visitantes').value, 10);
+    const motivacao = $('motivacao').value.trim();
     const compromisso = $('compromisso').checked;
 
     if(!nome){ return mostraErro('Por favor, preencha seu nome.'); }
+    if(!telefone){ return mostraErro('Por favor, preencha seu telefone.'); }
+    if(!nascimento){ return mostraErro('Por favor, preencha sua data de nascimento.'); }
+    if(!cpf){ return mostraErro('Por favor, preencha seu CPF.'); }
     if(!ano){ return mostraErro('Selecione o ano que está cursando.'); }
     if(!periodo){ return mostraErro('Selecione o período (diurno ou noturno).'); }
     if(!disponibilidade){ return mostraErro('Selecione em qual período você pode ajudar.'); }
+    if(!visitantes || visitantes < 2){ return mostraErro('Você precisa trazer no mínimo 2 convidados externos.'); }
+    if(!motivacao){ return mostraErro('Conte o que te estimula a ajudar na organização.'); }
     if(!compromisso){ return mostraErro('Confirme que está ciente das condições para a bonificação.'); }
 
     const btn = $('enviar');
@@ -381,7 +408,7 @@
     // COLE AQUI SUA CHAVE DE ACESSO DO WEB3FORMS (Access Key)
     const ACCESS_KEY = "bb44e490-90a8-45fb-af61-16fa903d2366";
     // COLE AQUI O LINK DO SEU GOOGLE APPS SCRIPT (termina em /exec)
-    const PLANILHA_URL = "https://script.google.com/macros/s/AKfycbw_0n0wYlMwGQe7k8b-2amKFbsRMD6W6sFz_T-XFsHmse6Nx7h3lqfmst65H0UQC6sW4A/exec";
+    const PLANILHA_URL = "https://script.google.com/macros/s/AKfycbxocY-ibWxLl4VYS-P1aVJzmlf5O3Sn2kS6Y3IeWshHLs7z_WggEiVHJ-iCVxFavpdJvA/exec";
     // ===================================================================
 
     const registro = {
@@ -389,9 +416,14 @@
       subject: "Nova inscrição - Arraiá da Agronomia",
       from_name: "Arraiá da Agronomia",
       nome: nome,
+      telefone: telefone,
+      "data de nascimento": nascimento,
+      cpf: cpf,
       ano: ano,
       "periodo do curso": periodo,
       "pode ajudar": disponibilidade,
+      "qtd visitantes": visitantes,
+      "o que te estimula": motivacao,
       enviado_em: new Date().toLocaleString('pt-BR')
     };
 
@@ -425,7 +457,8 @@
   });
 
   $('nova').addEventListener('click', () => {
-    $('nome').value=''; $('ano').value=''; $('compromisso').checked=false;
+    $('nome').value=''; $('telefone').value=''; $('nascimento').value=''; $('cpf').value='';
+    $('ano').value=''; $('visitantes').value='2'; $('motivacao').value=''; $('compromisso').checked=false;
     const p=document.querySelector('input[name=periodo]:checked'); if(p) p.checked=false;
     const d=document.querySelector('input[name=disponibilidade]:checked'); if(d) d.checked=false;
     const btn=$('enviar'); btn.disabled=false; btn.textContent='Confirmar minha ajuda 🎉';
