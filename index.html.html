@@ -1,0 +1,416 @@
+<!-- Formulário de inscrição - Festa Junina Agronomia / Agro Uningá -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rye&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
+
+  :root {
+    --vermelho: #c0392b;
+    --vermelho-escuro: #962d22;
+    --laranja: #e67e22;
+    --amarelo: #f1c40f;
+    --creme: #fdf6e3;
+    --creme-cartao: #fffdf6;
+    --verde: #27884a;
+    --azul: #2e86c1;
+    --marrom: #5b3a22;
+    --texto: #3a2414;
+    --borda: #e3d3b0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .fj-wrap {
+    font-family: 'Nunito', sans-serif;
+    color: var(--texto);
+    background:
+      radial-gradient(circle at 15% 10%, rgba(241,196,15,.18), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(230,126,34,.16), transparent 45%),
+      var(--creme);
+    min-height: 100%;
+    padding: 0 0 40px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  /* Bandeirinhas */
+  .bandeirinhas {
+    display: flex;
+    width: 100%;
+    height: 34px;
+    overflow: hidden;
+  }
+  .bandeirinhas span {
+    flex: 1;
+    height: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
+  }
+  .bandeirinhas span:nth-child(5n+1) { background: var(--vermelho); }
+  .bandeirinhas span:nth-child(5n+2) { background: var(--amarelo); }
+  .bandeirinhas span:nth-child(5n+3) { background: var(--verde); }
+  .bandeirinhas span:nth-child(5n+4) { background: var(--azul); }
+  .bandeirinhas span:nth-child(5n+5) { background: var(--laranja); }
+
+  .header {
+    text-align: center;
+    padding: 26px 20px 18px;
+    position: relative;
+  }
+  .header .arraia {
+    font-family: 'Rye', cursive;
+    font-size: clamp(28px, 6vw, 46px);
+    color: var(--vermelho);
+    text-shadow: 2px 2px 0 var(--amarelo);
+    line-height: 1.05;
+    letter-spacing: .5px;
+  }
+  .header .sub {
+    margin-top: 6px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--marrom);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .data-box {
+    display: inline-flex;
+    gap: 18px;
+    margin-top: 16px;
+    background: var(--vermelho);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 800;
+    box-shadow: 0 4px 0 var(--vermelho-escuro);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .data-box span { white-space: nowrap; }
+
+  .container {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0 18px;
+  }
+
+  .card {
+    background: var(--creme-cartao);
+    border: 2px solid var(--borda);
+    border-radius: 16px;
+    padding: 22px;
+    margin-top: 22px;
+    box-shadow: 0 6px 18px rgba(91,58,34,.08);
+  }
+
+  .card h2 {
+    font-family: 'Rye', cursive;
+    color: var(--laranja);
+    font-size: 22px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card .lead {
+    font-size: 14.5px;
+    color: #6b5240;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .regras {
+    background: linear-gradient(135deg, #fff7e0, #fdeccb);
+    border: 2px dashed var(--laranja);
+  }
+  .regra {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(230,126,34,.2);
+  }
+  .regra:last-child { border-bottom: none; }
+  .regra .num {
+    flex: 0 0 30px;
+    height: 30px;
+    background: var(--vermelho);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 15px;
+  }
+  .regra .txt { font-size: 14.5px; line-height: 1.45; padding-top: 3px; }
+  .regra .txt b { color: var(--vermelho-escuro); }
+
+  .ponto-badge {
+    display: inline-block;
+    background: var(--verde);
+    color: #fff;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  label {
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 14px 0 6px;
+    color: var(--marrom);
+  }
+  input[type=text], select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--borda);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 15px;
+    background: #fff;
+    color: var(--texto);
+    transition: border-color .15s;
+  }
+  input[type=text]:focus, select:focus {
+    outline: none;
+    border-color: var(--laranja);
+  }
+
+  .periodo-opts { display: flex; gap: 12px; margin-top: 6px; }
+  .disp-opts { flex-wrap: wrap; }
+  .disp-opts label { flex: 1 1 calc(50% - 6px); min-width: 110px; }
+  .periodo-opts label {
+    flex: 1; margin: 0; cursor: pointer;
+    border: 2px solid var(--borda);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 700;
+    background: #fff;
+    transition: all .15s;
+  }
+  .periodo-opts input { display: none; }
+  .periodo-opts input:checked + .pill-txt { color: #fff; }
+  .periodo-opts label:has(input:checked) {
+    background: var(--azul); border-color: var(--azul); color: #fff;
+  }
+
+  .check-line {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-top: 18px; padding: 12px;
+    background: #fff7e0; border-radius: 10px;
+  }
+  .check-line input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--vermelho); }
+  .check-line label { margin: 0; font-weight: 600; font-size: 13.5px; line-height: 1.45; color: var(--texto); }
+
+  .btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: var(--vermelho);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 var(--vermelho-escuro);
+    transition: transform .08s, box-shadow .08s;
+  }
+  .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--vermelho-escuro); }
+  .btn:disabled { opacity: .6; cursor: not-allowed; }
+
+  .erro { color: var(--vermelho); font-size: 13px; font-weight: 700; margin-top: 8px; display: none; }
+
+  .sucesso {
+    text-align: center;
+    padding: 30px 20px;
+  }
+  .sucesso .emoji { font-size: 54px; }
+  .sucesso h2 { font-family: 'Rye', cursive; color: var(--verde); font-size: 26px; margin: 8px 0; }
+  .sucesso p { color: #6b5240; font-size: 15px; line-height: 1.5; }
+  .link-btn {
+    background: none; border: none; color: var(--azul);
+    font-weight: 700; cursor: pointer; text-decoration: underline;
+    font-family: inherit; font-size: 14px; margin-top: 14px;
+  }
+
+  /* Painel organização */
+  .org-link {
+    display: block; text-align: center; margin: 26px auto 0;
+    background: none; border: none; color: #b89b6a;
+    font-size: 13px; cursor: pointer; font-family: inherit;
+  }
+  .org-painel { display: none; }
+  .tabela { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13.5px; }
+  .tabela th, .tabela td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--borda); }
+  .tabela th { color: var(--marrom); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; }
+  .contador { font-weight: 800; color: var(--verde); font-size: 15px; }
+  .vazio { text-align: center; color: #b89b6a; padding: 18px; font-style: italic; }
+  .mini-btn {
+    background: var(--borda); border: none; border-radius: 8px;
+    padding: 8px 12px; font-family: inherit; font-weight: 700;
+    font-size: 12.5px; cursor: pointer; color: var(--marrom); margin-top: 10px;
+  }
+</style>
+
+<div class="fj-wrap">
+  <div class="bandeirinhas" id="band-top"></div>
+
+  <div class="header">
+    <div class="arraia">🌽 Arraiá da Agronomia 🔥</div>
+    <div class="sub">Agro Uningá · UNINGÁ</div>
+    <div class="data-box">
+      <span>📅 18 de junho</span>
+      <span>🕖 das 19h às 22h</span>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Quadro de regras (bonificação) -->
+    <div class="card regras">
+      <span class="ponto-badge">🎁 Bonificação</span>
+      <h2>Como ganhar a bonificação</h2>
+      <p class="lead">Quem quiser a bonificação precisa cumprir as <b>quatro condições abaixo</b>. Não basta aparecer e ficar só na barraca!</p>
+
+      <div class="regra">
+        <div class="num">1</div>
+        <div class="txt">Ajudar no que for preciso para a festa acontecer — <b>organização, preparação e tarefas gerais</b>.</div>
+      </div>
+      <div class="regra">
+        <div class="num">2</div>
+        <div class="txt">Trazer <b>2 convidados externos</b> para prestigiar a festa.</div>
+      </div>
+      <div class="regra">
+        <div class="num">3</div>
+        <div class="txt">Vir ajudar <b>no dia da montagem</b> também — não somente ficar nas barracas durante o evento.</div>
+      </div>
+      <div class="regra">
+        <div class="num">4</div>
+        <div class="txt">Ao <b>término da festa</b>, ajudar no recolhimento e organização de tudo — todos participam, não só monta e some.</div>
+      </div>
+
+      <p class="lead" style="margin-top:12px;margin-bottom:0">📸 <b>Atenção:</b> o registro da participação será feito por <b>fotografia no início e no final</b> da festa, para conferência de quem realmente ajudou.</p>
+    </div>
+
+    <!-- Formulário -->
+    <div class="card" id="form-card">
+      <h2>Quero ajudar! 🙋</h2>
+      <p class="lead">Preencha seus dados abaixo para entrar no levantamento de quem vai conduzir e preparar o arraiá.</p>
+
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" placeholder="Seu nome completo" autocomplete="off">
+
+      <label for="ano">Ano que está cursando</label>
+      <select id="ano">
+        <option value="">Selecione...</option>
+        <option>1º ano</option>
+        <option>2º ano</option>
+        <option>3º ano</option>
+        <option>4º ano</option>
+        <option>5º ano</option>
+      </select>
+
+      <label>Período</label>
+      <div class="periodo-opts">
+        <label><input type="radio" name="periodo" value="Diurno"><span class="pill-txt">☀️ Diurno</span></label>
+        <label><input type="radio" name="periodo" value="Noturno"><span class="pill-txt">🌙 Noturno</span></label>
+      </div>
+
+      <label>Em qual período você pode ajudar?</label>
+      <div class="periodo-opts disp-opts">
+        <label><input type="radio" name="disponibilidade" value="Manhã"><span class="pill-txt">🌅 Manhã</span></label>
+        <label><input type="radio" name="disponibilidade" value="Tarde"><span class="pill-txt">🌤️ Tarde</span></label>
+        <label><input type="radio" name="disponibilidade" value="Noite"><span class="pill-txt">🌙 Noite</span></label>
+        <label><input type="radio" name="disponibilidade" value="Integral"><span class="pill-txt">⏰ Integral</span></label>
+      </div>
+
+      <div class="check-line">
+        <input type="checkbox" id="compromisso">
+        <label for="compromisso">Estou ciente de que, para receber a bonificação, preciso cumprir as 4 condições acima (ajudar na preparação, trazer 2 convidados, ajudar na montagem no dia e no recolhimento ao final) e que minha participação será registrada por fotografia.</label>
+      </div>
+
+      <div class="erro" id="erro"></div>
+
+      <button class="btn" id="enviar">Confirmar minha ajuda 🎉</button>
+    </div>
+
+    <!-- Sucesso -->
+    <div class="card sucesso" id="sucesso-card" style="display:none">
+      <div class="emoji">🎊</div>
+      <h2>Inscrição confirmada!</h2>
+      <p id="sucesso-msg"></p>
+      <button class="link-btn" id="nova">Inscrever outra pessoa</button>
+    </div>
+
+  </div>
+  <div class="bandeirinhas" id="band-bot" style="margin-top:30px"></div>
+</div>
+
+<script>
+  // Bandeirinhas
+  function montaBand(id){ const el=document.getElementById(id); for(let i=0;i<30;i++){ el.appendChild(document.createElement('span')); } }
+  montaBand('band-top'); montaBand('band-bot');
+
+  const $ = id => document.getElementById(id);
+  const erro = $('erro');
+
+  function mostraErro(msg){ erro.textContent = msg; erro.style.display = 'block'; }
+  function limpaErro(){ erro.style.display = 'none'; }
+
+  $('enviar').addEventListener('click', async () => {
+    limpaErro();
+    const nome = $('nome').value.trim();
+    const ano = $('ano').value;
+    const periodoEl = document.querySelector('input[name=periodo]:checked');
+    const periodo = periodoEl ? periodoEl.value : '';
+    const dispEl = document.querySelector('input[name=disponibilidade]:checked');
+    const disponibilidade = dispEl ? dispEl.value : '';
+    const compromisso = $('compromisso').checked;
+
+    if(!nome){ return mostraErro('Por favor, preencha seu nome.'); }
+    if(!ano){ return mostraErro('Selecione o ano que está cursando.'); }
+    if(!periodo){ return mostraErro('Selecione o período (diurno ou noturno).'); }
+    if(!disponibilidade){ return mostraErro('Selecione em qual período você pode ajudar.'); }
+    if(!compromisso){ return mostraErro('Confirme que está ciente das condições para a bonificação.'); }
+
+    const btn = $('enviar');
+    btn.disabled = true; btn.textContent = 'Enviando...';
+
+    // ===================================================================
+    // COLE AQUI O SEU ENDPOINT DO FORMSPREE (ex.: https://formspree.io/f/abcdwxyz)
+    const ENDPOINT = "https://formspree.io/f/mqeoeagl";
+    // ===================================================================
+
+    const registro = {
+      nome, ano, periodo,
+      "pode ajudar": disponibilidade,
+      enviado_em: new Date().toLocaleString('pt-BR')
+    };
+
+    try {
+      const resp = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(registro)
+      });
+      if(!resp.ok){ throw new Error('falha'); }
+      $('form-card').style.display = 'none';
+      $('sucesso-msg').textContent = nome.split(' ')[0] + ', sua ajuda foi registrada! Nos vemos no dia 18/06, das 19h às 22h. Lembre-se de trazer seus 2 convidados, ajudar na montagem e no recolhimento — e que haverá foto no início e no final. 🌽';
+      $('sucesso-card').style.display = 'block';
+    } catch(e) {
+      btn.disabled = false; btn.textContent = 'Confirmar minha ajuda 🎉';
+      mostraErro('Não foi possível enviar agora. Verifique sua conexão e tente novamente.');
+    }
+  });
+
+  $('nova').addEventListener('click', () => {
+    $('nome').value=''; $('ano').value=''; $('compromisso').checked=false;
+    const p=document.querySelector('input[name=periodo]:checked'); if(p) p.checked=false;
+    const d=document.querySelector('input[name=disponibilidade]:checked'); if(d) d.checked=false;
+    const btn=$('enviar'); btn.disabled=false; btn.textContent='Confirmar minha ajuda 🎉';
+    $('sucesso-card').style.display='none'; $('form-card').style.display='block';
+  });
+
+  function escapa(s){ return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+</script>
